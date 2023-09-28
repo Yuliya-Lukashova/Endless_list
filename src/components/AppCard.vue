@@ -1,4 +1,11 @@
 <script setup>
+import { RecycleScroller } from 'vue-virtual-scroller';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import { useUserStore } from '../store';
+
+const userStore = useUserStore();
+
+// userStore.users.forEach((user) => console.log(user));
 const props = defineProps({
   user: {
     type: Object,
@@ -6,25 +13,39 @@ const props = defineProps({
     default: () => {},
   }
 })
+
 </script>
 
 <template>
+  <RecycleScroller
+    class="scroller"
+    :items="userStore.users"
+    :item-size="4"
+    key-field="id"
+    v-slot="{ user }"
+  >
     <li class="card">
       <div>
         <img class="card__img" src="https://i.pinimg.com/474x/27/01/f5/2701f51da94a8f339b2149ca5d15d2a5.jpg">
       </div>
       <div class="card__user-info user-info">
-        <p class="user-info__name"><b>name: </b>{{ user.firstname }}</p>
-        <p class="user-info__phone"><span>phone: </span>{{ user.phone }}</p>
-        <p class="user-info__email"><span>email: </span>{{ user.email }}</p>
-        <p class="user-info__gender"><span>gender: </span>{{ user.gender }}</p>
-        <p class="user-info__website"><span>website: </span>{{ user.website }}</p>
+        <p class="user-info__name"><b>name: </b>{{ user?.name }}</p>
+        <p class="user-info__phone"><span>phone: </span>{{ user?.phone }}</p>
+        <p class="user-info__email"><span>email: </span>{{ user?.email }}</p>
+        <p class="user-info__gender"><span>gender: </span>{{ user?.gender }}</p>
+        <p class="user-info__website"><span>website: </span>{{ user?.website }}</p>
       </div>
     </li>
+  </RecycleScroller>
 </template>
 
 <style lang="scss">
 $font: 'Kanit', sans-serif;
+
+.scroller {
+  height: 100%;
+}
+
 
 .card {
   box-sizing: border-box;
@@ -52,8 +73,11 @@ $font: 'Kanit', sans-serif;
 
 .user-info {
   padding: 5px;
-  margin-left: 20px;
+  margin-left: 10px;
   font-family: $font;
+  p {
+    margin: 5px;
+  }
   span {
     font-weight:bolder;
   }
