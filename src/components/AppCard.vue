@@ -1,8 +1,4 @@
 <script setup>
-import { useUserStore } from '../store'
-
-const userStore = useUserStore();
-
 const props = defineProps({
   user: {
     type: Object,
@@ -32,8 +28,8 @@ $font: 'Kanit', sans-serif;
 
 .card {
   box-sizing: border-box;
-  width: 510px;
-  height: 250px;
+  width: 500px;
+  height: 230px;
   background: rgba(220, 220, 207, 0.58);
   box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.32);
   border-radius: 17px;
@@ -50,7 +46,7 @@ $font: 'Kanit', sans-serif;
 
 .card__img {
   width: 150px;
-  height: 220px;
+  height: 200px;
   border-radius: 17px;
 }
 

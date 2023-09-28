@@ -1,15 +1,31 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-const url = 'https://fakerapi.it/api/v1/persons?_quantity=20';
+import axios from 'axios';
+
+const url = 'https://fakerapi.it/api/v1/persons';
 
 export const useUserStore = defineStore('userStore', () => {
-  const users= ref([]);
+  const users = ref([]);
+  let currentPage = ref(1);
+  const usersOnPage = 4;
+  const isLoading = ref(false);
 
-  const getUsers = async() => {
-    const res = await fetch(url);
-    const data = await res.json();
-    users.value = data.data;
-  };
+  const loadUsers = async() => {
+    if (isLoading.value) return;
+      isLoading.value = true;
+    try {
+      const response = await axios.get(`${url}?_quantity=${usersOnPage}&_page=${currentPage.value}`);
+      const newUsers = response.data.data;
 
-  return {users, getUsers}
+      if (newUsers.length > 0) {
+        users.value = [...users.value, ...newUsers];
+        currentPage.value++;
+      }
+    } catch (error) {
+      console.error('Bad request', error);
+    }finally {
+      isLoading.value = false;
+    }
+  }
+  return {users, currentPage, usersOnPage, isLoading, loadUsers}
 });

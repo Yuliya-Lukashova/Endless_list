@@ -4,9 +4,17 @@ import AppCard from './components/AppCard.vue';
 
 const userStore = useUserStore();
 
-let users = userStore.getUsers();
-console.log(users);
+let users = userStore.loadUsers();
 
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+
+  if (scrollY + windowHeight >= documentHeight - 200) {
+    userStore.loadUsers();
+  }
+});
 </script>
 
 <template>
