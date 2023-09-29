@@ -7,7 +7,7 @@ const url = 'https://fakerapi.it/api/v1/persons';
 export const useUserStore = defineStore('userStore', () => {
   const users = ref([]);
   let currentPage = ref(1);
-  const usersOnPage = 4;
+  const usersOnPage = 5;
   const isLoading = ref(false);
 
   const loadUsers = async() => {
