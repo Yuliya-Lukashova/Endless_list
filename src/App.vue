@@ -74,7 +74,7 @@ input[type = "checkbox"] {
 label.container {
   margin-top: 15px;
   position: absolute;
-  left: 46%;
+  left: 48%;
   display: block;
   width: 60px;
   height: 30px;
