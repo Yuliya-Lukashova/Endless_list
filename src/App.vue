@@ -2,6 +2,7 @@
 import { useUserStore } from './store';
 import AppCard from './components/AppCard.vue';
 import { useDark, useToggle } from "@vueuse/core";
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
@@ -17,7 +18,7 @@ window.addEventListener('scroll', () => {
 
   if (scrollY + windowHeight >= documentHeight - 200) {
     userStore.loadUsers();
-  }
+  } 
 });
 </script>
 
@@ -28,14 +29,11 @@ window.addEventListener('scroll', () => {
     <label for="check" class="shadow"></label>
   </label>
   <h3 class="app-title">Endless list app</h3>
-  <ul class="cards">
+  <div class="cards">
     <AppCard 
-      v-for="user in userStore.users"
-      :key="user.id"
-      :user="user"
-      :users="userStore.users"
+      :list="userStore.users"
     />
-  </ul> 
+  </div> 
 </template>
 
 <style lang="scss">
@@ -46,12 +44,12 @@ $font: 'Kanit', sans-serif;
     color:rgb(255, 255, 255);
   }
   body {
-  background-color: #202020;
-}
-.card {
-  background-color: rgba(105, 105, 103, 0.58);
-  color: rgb(255, 255, 255);
-}
+    background-color: #202020;
+  }
+  .card {
+    background-color: rgba(105, 105, 103, 0.58);
+    color: rgb(255, 255, 255);
+  }
 }
 
 .app-title {
@@ -59,9 +57,8 @@ $font: 'Kanit', sans-serif;
   font-family: $font;
 }
 .cards{
-display: flex;
-align-items: center;
-flex-direction: column;
+  display: grid;
+  justify-items: center;
 }
 
 input[type = "checkbox"] {

@@ -5,9 +5,8 @@ import { useUserStore } from '../store';
 
 const userStore = useUserStore();
 
-// userStore.users.forEach((user) => console.log(user));
 const props = defineProps({
-  users: {
+  list: {
     type: Array,
   },
   user: {
@@ -16,38 +15,48 @@ const props = defineProps({
     default: () => {},
   }
 });
-console.log(props.users);
 
 </script>
 
 <template>
-  <!-- <RecycleScroller
+  <RecycleScroller
     class="scroller"
-    :items="users"
+    :items="list"
     :item-size="32"
     key-field="id"
-    v-slot="{ user }"
-  > -->
+    v-slot="{ item }"
+  >
     <li class="card">
       <div>
         <img class="card__img" src="https://i.pinimg.com/474x/27/01/f5/2701f51da94a8f339b2149ca5d15d2a5.jpg">
       </div>
       <div class="card__user-info user-info">
-        <p class="user-info__name"><b>name: </b>{{ user?.firstname}}</p>
-        <p class="user-info__phone"><span>phone: </span>{{ user?.phone }}</p>
-        <p class="user-info__email"><span>email: </span>{{ user?.email }}</p>
-        <p class="user-info__gender"><span>gender: </span>{{ user?.gender }}</p>
-        <p class="user-info__website"><span>website: </span>{{ user?.website }}</p>
+        <p class="user-info__name"><span>name: </span>{{ item.firstname}}</p>
+        <p class="user-info__phone"><span>phone: </span>{{ item.phone }}</p>
+        <p class="user-info__email"><span>email: </span>{{ item.email }}</p>
+        <p class="user-info__gender"><span>gender: </span>{{ item.gender }}</p>
+        <p class="user-info__website"><span>website: </span>{{ item.website }}</p>
       </div>
     </li>
-  <!-- </RecycleScroller> -->
+  </RecycleScroller>
 </template>
 
 <style lang="scss">
 $font: 'Kanit', sans-serif;
 
+.vue-recycle-scroller.ready .vue-recycle-scroller__item-view {
+  position: static;
+}
+
+.item {
+  background-color: lightgray;
+  padding: 100px 0;
+  text-align: center;
+}
+
 .scroller {
   height: 100%;
+  width: 500px;
 }
 
 .card {
