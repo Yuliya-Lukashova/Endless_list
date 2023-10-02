@@ -57,8 +57,9 @@ $font: 'Kanit', sans-serif;
   font-family: $font;
 }
 .cards{
-  display: grid;
-  justify-items: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 input[type = "checkbox"] {

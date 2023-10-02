@@ -22,7 +22,7 @@ const props = defineProps({
   <RecycleScroller
     class="scroller"
     :items="list"
-    :item-size="32"
+    :item-size="10"
     key-field="id"
     v-slot="{ item }"
   >
@@ -47,27 +47,23 @@ $font: 'Kanit', sans-serif;
 .vue-recycle-scroller.ready .vue-recycle-scroller__item-view {
   position: static;
 }
-
-.item {
-  background-color: lightgray;
-  padding: 100px 0;
-  text-align: center;
-}
+// .vue-recycle-scroller__item-wrapper {
+//   min-height: 480px;
+// }
 
 .scroller {
   height: 100%;
-  width: 500px;
 }
 
 .card {
   box-sizing: border-box;
   width: 385px;
   height: 195px;
-  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.32);
+  box-shadow: 12px 17px 20px rgba(0, 0, 0, 0.22);
   border-radius: 17px;
   transition: all 0.5s;
   display: flex;
-  margin: 10px;
+  margin: 30px;
   padding: 11px;
   &:hover {
     border: 3px solid #6c8b3f;
