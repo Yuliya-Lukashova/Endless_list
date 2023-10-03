@@ -14,12 +14,10 @@ export const useUserStore = defineStore('userStore', () => {
     if (isLoading.value) return;
       isLoading.value = true;
     try {
-      const response = await axios.get(`${url}?_quantity=${usersOnPage}&_page=${currentPage.value}`);
+      const response = await axios.get(`${url}?_quantity=${usersOnPage}`);
       const newUsers = response.data.data;
-
       if (newUsers.length > 0) {
-        users.value = [...users.value, ...newUsers];
-        currentPage.value++;
+        users.value = [...newUsers];
       }
     } catch (error) {
       console.error('Bad request', error);

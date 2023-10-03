@@ -1,8 +1,8 @@
 <script setup>
 import { RecycleScroller } from 'vue-virtual-scroller';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
+import { useVirtualList, useInfiniteScroll, useToggle } from '@vueuse/core';
 import { useUserStore } from '../store';
-
 const userStore = useUserStore();
 
 const props = defineProps({
@@ -16,44 +16,45 @@ const props = defineProps({
   }
 });
 
+let users = props.list;
+
+const { list, containerProps, wrapperProps } = useVirtualList(users, {
+  itemHeight: 225,
+});
+
+useInfiniteScroll(
+  containerProps.ref,
+  () => {
+    users.push(...userStore.users)
+  },
+  { distance: 1 }
+);
+
 </script>
 
 <template>
-  <RecycleScroller
-    class="scroller"
-    :items="list"
-    :item-size="10"
-    key-field="id"
-    v-slot="{ item }"
-  >
-    <li class="card">
+  <div v-bind="containerProps" style="height: 700px">
+    <div v-bind="wrapperProps">
+      <div v-for="item in list" :key="item.index" style="height: 225px">
+    <li class="card" id="card">
       <div>
         <img class="card__img" src="https://i.pinimg.com/474x/27/01/f5/2701f51da94a8f339b2149ca5d15d2a5.jpg">
       </div>
       <div class="card__user-info user-info">
-        <p class="user-info__name"><span>name: </span>{{ item.firstname}}</p>
-        <p class="user-info__phone"><span>phone: </span>{{ item.phone }}</p>
-        <p class="user-info__email"><span>email: </span>{{ item.email }}</p>
-        <p class="user-info__gender"><span>gender: </span>{{ item.gender }}</p>
-        <p class="user-info__website"><span>website: </span>{{ item.website }}</p>
+        <p class="user-info__name"><span>name: </span>{{ item.data.firstname }}</p>
+        <p class="user-info__phone"><span>phone: </span>{{ item.data.phone }}</p>
+        <p class="user-info__email"><span>email: </span>{{ item.data.email }}</p>
+        <p class="user-info__gender"><span>gender: </span>{{ item.data.gender }}</p>
+        <p class="user-info__website"><span>website: </span>{{ item.data.website }}</p>
       </div>
-    </li>
-  </RecycleScroller>
+    </li> 
+  </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
 $font: 'Kanit', sans-serif;
-
-.vue-recycle-scroller.ready .vue-recycle-scroller__item-view {
-  position: static;
-}
-// .vue-recycle-scroller__item-wrapper {
-//   min-height: 480px;
-// }
-
-.scroller {
-  height: 100%;
-}
 
 .card {
   box-sizing: border-box;

@@ -9,12 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/components": "^10.4.1",
     "@vueuse/core": "^10.4.1",
     "axios": "^1.5.1",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-virtual-scroll-grid": "^1.10.2",
-    "vue-virtual-scroller": "^2.0.0-beta.8"
+    "vue-virtual-scroller": "^2.0.0-beta.8",
+    "vue3-virtual-scroll-list": "^0.2.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
