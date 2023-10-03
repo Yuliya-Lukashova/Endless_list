@@ -19,13 +19,15 @@ const { list, containerProps, wrapperProps } = useVirtualList(users, {
   itemHeight: 225,
 });
 
+const loadData = async () => {
+await userStore.loadUsers();
+users.push(...userStore.users);
+}
+
 useInfiniteScroll(
-  containerProps.ref,
-  () => {
-    userStore.loadUsers()
-    users.push(...userStore.users)
-  },
-  { distance: 1 }
+containerProps.ref,
+() => loadData(),
+{ distance: 1 }
 );
 </script>
 
