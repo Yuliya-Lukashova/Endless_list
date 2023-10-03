@@ -1,7 +1,5 @@
 <script setup>
-import { RecycleScroller } from 'vue-virtual-scroller';
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
-import { useVirtualList, useInfiniteScroll, useToggle } from '@vueuse/core';
+import { useVirtualList, useInfiniteScroll } from '@vueuse/core';
 import { useUserStore } from '../store';
 const userStore = useUserStore();
 
@@ -17,7 +15,6 @@ const props = defineProps({
 });
 
 let users = props.list;
-
 const { list, containerProps, wrapperProps } = useVirtualList(users, {
   itemHeight: 225,
 });
@@ -25,30 +22,30 @@ const { list, containerProps, wrapperProps } = useVirtualList(users, {
 useInfiniteScroll(
   containerProps.ref,
   () => {
+    userStore.loadUsers()
     users.push(...userStore.users)
   },
   { distance: 1 }
 );
-
 </script>
 
 <template>
   <div v-bind="containerProps" style="height: 700px">
     <div v-bind="wrapperProps">
       <div v-for="item in list" :key="item.index" style="height: 225px">
-    <li class="card" id="card">
-      <div>
-        <img class="card__img" src="https://i.pinimg.com/474x/27/01/f5/2701f51da94a8f339b2149ca5d15d2a5.jpg">
+        <li class="card" id="card">
+          <div>
+            <img class="card__img" src="https://i.pinimg.com/474x/27/01/f5/2701f51da94a8f339b2149ca5d15d2a5.jpg">
+          </div>
+          <div class="card__user-info user-info">
+            <p class="user-info__name"><span>name: </span>{{ item.data.firstname }}</p>
+            <p class="user-info__phone"><span>phone: </span>{{ item.data.phone }}</p>
+            <p class="user-info__email"><span>email: </span>{{ item.data.email }}</p>
+            <p class="user-info__gender"><span>gender: </span>{{ item.data.gender }}</p>
+            <p class="user-info__website"><span>website: </span>{{ item.data.website }}</p>
+          </div>
+        </li> 
       </div>
-      <div class="card__user-info user-info">
-        <p class="user-info__name"><span>name: </span>{{ item.data.firstname }}</p>
-        <p class="user-info__phone"><span>phone: </span>{{ item.data.phone }}</p>
-        <p class="user-info__email"><span>email: </span>{{ item.data.email }}</p>
-        <p class="user-info__gender"><span>gender: </span>{{ item.data.gender }}</p>
-        <p class="user-info__website"><span>website: </span>{{ item.data.website }}</p>
-      </div>
-    </li> 
-  </div>
     </div>
   </div>
 </template>

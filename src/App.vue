@@ -9,18 +9,6 @@ const toggleDark = useToggle(isDark);
 
 const userStore = useUserStore();
 let users = userStore.loadUsers();
-
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const documentHeight = document.documentElement.scrollHeight;
-
-  if (scrollY + windowHeight >= documentHeight - 700) {
-    userStore.loadUsers();
-    userStore.isLoading = true;
-  } 
-});
-
 </script>
 
 
@@ -31,14 +19,10 @@ window.addEventListener('scroll', () => {
     <label for="check" class="shadow"></label>
   </label>
   <h3 class="app-title">Endless list app</h3>
-  <div class="cards" id="cards">
-    <div v-bind="containerProps" style="height: 300px">
-    <div v-bind="wrapperProps">
+  <div class="cards">
     <AppCard 
       :list="userStore.users"
     /> 
-  </div>
-  </div>
   </div> 
 </template>
 
@@ -69,6 +53,7 @@ $font: 'Kanit', sans-serif;
   align-items: center;
   flex-direction: column;
   box-sizing: border-box;
+  overflow: auto;
 }
 
 input[type = "checkbox"] {
