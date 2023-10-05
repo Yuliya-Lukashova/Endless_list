@@ -1,16 +1,13 @@
 <script setup>
 import { useUserStore } from './store';
-import AppCard from './components/AppCard.vue';
 import { useDark, useToggle } from "@vueuse/core";
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
+import AppCard from './components/AppCard.vue';
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-
 const userStore = useUserStore();
 let users = userStore.loadUsers();
 </script>
-
 
 <template>
   <label class="container">
@@ -28,20 +25,6 @@ let users = userStore.loadUsers();
 
 <style lang="scss">
 $font: 'Kanit', sans-serif;
-
-.dark {
-  .app-title{
-    color:rgb(255, 255, 255);
-  }
-  body {
-    background-color: #202020;
-  }
-  .card {
-    background-color: rgba(105, 105, 103, 0.58);
-    color: rgb(255, 255, 255);
-    box-shadow: 12px 17px 20px rgba(124, 123, 123, 0.22);
-  }
-}
 
 .app-title {
   text-align: center;
@@ -74,8 +57,8 @@ label.container {
   border-radius: 50px;
   position: relative;
   cursor: pointer;
-  box-shadow: 9px 9px 29px #969696,
-             -9px -9px 29px #ffffff;
+  box-shadow: 3px 3px 20px #969696,
+             -3px -3px 20px #ffffff;
 }
 
 label.shadow {
@@ -110,4 +93,35 @@ input[type = "checkbox"]:checked ~ span {
   background: #0a100d;
   transform: rotate(220deg);
 }
+
+.dark {
+  .app-title{
+    color:rgb(255, 255, 255);
+  }
+  body {
+    background-color: #202020;
+  }
+  .card {
+    background-color: rgba(105, 105, 103, 0.58);
+    color: rgb(255, 255, 255);
+    box-shadow: 12px 17px 20px rgba(124, 123, 123, 0.22);
+  }
+  .details-modal__wrapper {
+    color:#eceaea;
+    background: rgb(94, 93, 93);
+    box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1),
+                0 0  0 2px rgb(151, 150, 150),
+                0.3em 0.3em 1em rgba(0,0,0,0.7);
+  }
+  .details-modal__button-close {
+    box-shadow: 2px 2px 6px #c5c5c5,
+             -2px -2px 6px #5e5d5d;
+  }
+  .details-modal__button-close:active {
+    border: 1px solid white;
+    box-shadow: 10px 10px 12px #9d9b9b,
+              -4px -4px 12px #ffffff;
+  }
+}
+
 </style>

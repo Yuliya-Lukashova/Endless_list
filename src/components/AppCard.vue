@@ -1,18 +1,15 @@
 <script setup>
+import { ref } from 'vue';
 import { useVirtualList, useInfiniteScroll } from '@vueuse/core';
 import { useUserStore } from '../store';
 import DetailsModal from './DetailsModal.vue';
 
+const currentUser = ref(null);
 const userStore = useUserStore();
 
 const props = defineProps({
   list: {
     type: Array,
-  },
-  item: {
-    type: Object,
-    required: true,
-    default: () => {},
   }
 });
 
@@ -32,30 +29,32 @@ useInfiniteScroll(
   { distance: 1 }
 );
 
-const showModalInfo = () => {
-  userStore.isModalInfo = true;
+const showModalInfo = (user) => {
+userStore.isModalInfo = true;
+currentUser.value = user.data;
 }
-
 </script>
 
 <template>
   <DetailsModal
     v-if="userStore.isModalInfo"
-    v-for="user in userStore.users" :key="user.id"
   >
-    <p class="target-user__firstname"><span>Firstname: </span>{{ user.firstname }}</p>
-    <p class="target-user__lastname"><span>Lastname: </span>{{ user.lastname }}</p>
-    <p class="target-user__email"><span>Email: </span>{{ user.email }}</p>
-    <p class="target-user__phone"><span>Phone: </span>{{ user.phone }}</p>
-    <p class="target-user__birthday"><span>Birthday: </span>{{ user.birthday }}</p>
-    <p class="target-user__address"><span>Address: </span>{{ user.address }}</p>
-    <p class="target-user__gender"><span>Gender: </span>{{ user.gender }}</p>
-    <p class="target-user__website"><span>Website: </span>{{ user.website }}</p>
+    <p class="target-user__firstname"><span>Firstname: </span>{{ currentUser.firstname }}</p>
+    <p class="target-user__lastname"><span>Lastname: </span>{{ currentUser.lastname }}</p>
+    <p class="target-user__email"><span>Email: </span>{{ currentUser.email }}</p>
+    <p class="target-user__phone"><span>Phone: </span>{{ currentUser.phone }}</p>
+    <p class="target-user__birthday"><span>Birthday: </span>{{ currentUser.birthday }}</p>
+    <p class="target-user__address"><span>Address: </span>{{ currentUser.address.street }}</p>
+    <p class="target-user__gender"><span>Gender: </span>{{ currentUser.gender }}</p>
+    <p class="target-user__website"><span>Website: </span>{{ currentUser.website }}</p>
   </DetailsModal>
 
   <div v-bind="containerProps" style="height: 700px">
     <div v-bind="wrapperProps">
-      <div v-for="item in list" :key="item.id" style="height: 225px">
+      <div
+        v-for="item in list"
+        :key="item.id"
+        style="height: 225px">
         <li class="card" id="card">
           <div>
             <img class="card__img" src="https://i.pinimg.com/474x/27/01/f5/2701f51da94a8f339b2149ca5d15d2a5.jpg">
@@ -66,7 +65,7 @@ const showModalInfo = () => {
             <p class="user-info__email"><span>email: </span>{{ item.data.email }}</p>
             <p class="user-info__gender"><span>gender: </span>{{ item.data.gender }}</p>
             <p class="user-info__website"><span>website: </span>{{ item.data.website }}</p>
-            <button class="user-info__button-info" @click="showModalInfo()">Info</button>
+            <button class="user-info__button-info" @click="showModalInfo(item)">Info</button>
           </div>
         </li> 
       </div>
@@ -88,12 +87,11 @@ $font: 'Kanit', sans-serif;
   display: flex;
   margin: 30px;
   padding: 11px;
-}
-
-.card__img {
-  width: 140px;
-  height: 170px;
-  border-radius: 17px;
+  .card__img {
+    width: 140px;
+    height: 170px;
+    border-radius: 17px;
+  }
 }
 
 .user-info {
@@ -112,7 +110,7 @@ $font: 'Kanit', sans-serif;
 .user-info__button-info {
   position: absolute;
   bottom: 5px;
-  right: 10px;
+  right: 20px;
   text-align: center;
   cursor: pointer;
   width: 40px;
@@ -123,8 +121,8 @@ $font: 'Kanit', sans-serif;
   background: #6c8b3f;
   border: 2px solid #c4c1c1;
   transition: all .3s;
-  box-shadow: 6px 6px 12px #a5a3a3,
-             -6px -6px 12px #ffffff;
+  box-shadow: 2px 2px 9px #a5a3a3,
+             -2px -2px 9px #ffffff;
 }
 
 .user-info__button-info:active {

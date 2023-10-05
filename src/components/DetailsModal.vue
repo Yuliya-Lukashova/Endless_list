@@ -3,21 +3,13 @@ import { useUserStore } from '../store';
 
 const userStore = useUserStore();
 
-const props = defineProps({
-  item: {
-    type: Object,
-    required: true,
-    default: () => {},
-  }
-});
-
 const closeModalInfo = () => {
   userStore.isModalInfo = false;
-}
+};
 </script>
 
 <template>
-<div class="details-modal__wrapper">
+  <div class="details-modal__wrapper">
     <div class="details-modal__target-user target-user">
       <slot></slot>
     </div>
@@ -27,32 +19,33 @@ const closeModalInfo = () => {
 
 <style lang="scss">
 .details-modal__wrapper {
+  min-width: 320px;
   position: absolute;
   z-index: 10;
-  margin-right: 20px;
   display: flex;
   flex-direction: column;
   padding: 10px;
   position: absolute;
   background: white;
   border-radius: 10px;
-  transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: border-radius 0.5s;
   box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1),
-              0 0  0 2px rgb(190, 190, 190),
-              0.3em 0.3em 1em rgba(0,0,0,0.3);
+              0 0  0 2px rgb(151, 150, 150),
+              0.3em 0.3em 1em rgba(0,0,0,0.7);
  }
 
- .target-user p {
-  max-width: 300px;
-  font-family: 'Kanit', sans-serif;
-  padding: 3px;
-  border: 1px solid rgb(210, 206, 206);
-  border-radius: 12px;
+ .target-user {
+  p {
+    max-width: 300px;
+    font-family: 'Kanit', sans-serif;
+    padding: 3px;
+    border: 1px solid rgb(210, 206, 206);
+    border-radius: 12px;
+    span{
+      color: #6c8b3f;
+    }
  }
- 
- .target-user p span{
-  color: #6c8b3f;
- }
+}
 
  .details-modal__button-close {
   cursor: pointer;
