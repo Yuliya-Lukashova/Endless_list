@@ -9,6 +9,7 @@ export const useUserStore = defineStore('userStore', () => {
   let currentPage = ref(1);
   const usersOnPage = 5;
   const isLoading = ref(false);
+  const isModalInfo = ref(false);
 
   const loadUsers = async() => {
     if (isLoading.value) return;
@@ -25,5 +26,5 @@ export const useUserStore = defineStore('userStore', () => {
       isLoading.value = false;
     }
   }
-  return {users, currentPage, usersOnPage, isLoading, loadUsers}
+  return {users, currentPage, usersOnPage, isLoading, isModalInfo, loadUsers}
 });
